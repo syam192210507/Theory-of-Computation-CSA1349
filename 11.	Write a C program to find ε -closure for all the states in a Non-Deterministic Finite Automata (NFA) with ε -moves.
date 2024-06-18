@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_STATES 100
+
+// Function to perform DFS to find the ε-closure
+void epsilonClosure(int state, int n, int epsilonTransitions[MAX_STATES][MAX_STATES], int closure[MAX_STATES]) {
+    closure[state] = 1;  // Mark this state as reachable
+
+    for (int i = 0; i < n; i++) {
+        if (epsilonTransitions[state][i] && !closure[i]) {
+            epsilonClosure(i, n, epsilonTransitions, closure);
+        }
+    }
+}
+
+int main() {
+    int n, e;
+    int epsilonTransitions[MAX_STATES][MAX_STATES] = {0};
+    int closure[MAX_STATES];
+
+    printf("Enter the number of states: ");
+    scanf("%d", &n);
+
+    printf("Enter the number of epsilon transitions: ");
+    scanf("%d", &e);
+
+    printf("Enter the epsilon transitions (from_state to_state):\n");
+    for (int i = 0; i < e; i++) {
+        int from, to;
+        scanf("%d %d", &from, &to);
+        epsilonTransitions[from][to] = 1;
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < MAX_STATES; j++) {
+            closure[j] = 0;
+        }
+
+        epsilonClosure(i, n, epsilonTransitions, closure);
+
+        printf("ε-closure of state %d: {", i);
+        int first = 1;
+        for (int j = 0; j < n; j++) {
+            if (closure[j]) {
+                if (!first) {
+                    printf(", ");
+                }
+                printf("%d", j);
+                first = 0;
+            }
+        }
+        printf("}\n");
+    }
+
+    return 0;
+}
