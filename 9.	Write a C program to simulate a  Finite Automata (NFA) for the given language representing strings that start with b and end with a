@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the input string is accepted by the NFA
+int isAcceptedByNFA(const char* str) {
+    int length = strlen(str);
+
+    // Check if the string length is less than 2
+    if (length < 2) {
+        return 0; // Reject the string as it cannot start with 'b' and end with 'a'
+    }
+
+    // Check if the string starts with 'b' and ends with 'a'
+    if (str[0] == 'b' && str[length - 1] == 'a') {
+        return 1; // Accept the string
+    }
+
+    return 0; // Reject the string
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (isAcceptedByNFA(inputString)) {
+        printf("The string is accepted by the NFA.\n");
+    } else {
+        printf("The string is rejected by the NFA.\n");
+    }
+
+    return 0;
+}
