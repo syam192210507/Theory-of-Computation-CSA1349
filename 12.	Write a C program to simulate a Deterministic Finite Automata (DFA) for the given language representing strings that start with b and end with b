@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef enum { START, B_START, B_END, REJECT } State;
+
+// Function to simulate the DFA
+int simulateDFA(const char* str) {
+    State currentState = START;
+    int length = strlen(str);
+
+    for (int i = 0; i < length; ++i) {
+        char c = str[i];
+        switch (currentState) {
+            case START:
+                if (c == 'b') {
+                    currentState = B_START;
+                } else {
+                    currentState = REJECT;
+                }
+                break;
+            case B_START:
+                if (c == 'b') {
+                    currentState = B_END;
+                } else {
+                    // Remain in B_START or move to B_END
+                    currentState = B_START;
+                }
+                break;
+            case B_END:
+                if (c != 'b') {
+                    currentState = B_START;
+                }
+                break;
+            case REJECT:
+                break;
+        }
+    }
+
+    return currentState == B_END;
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (simulateDFA(inputString)) {
+        printf("The string is accepted by the DFA.\n");
+    } else {
+        printf("The string is rejected by the DFA.\n");
+    }
+
+    return 0;
+}
