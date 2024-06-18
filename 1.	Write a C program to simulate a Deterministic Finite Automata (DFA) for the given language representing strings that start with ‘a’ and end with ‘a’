@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the input string is accepted by the DFA
+int isAcceptedByDFA(const char* str) {
+    int length = strlen(str);
+
+    // Check if the string length is less than 2
+    if (length < 2) {
+        return 0; // Reject the string as it cannot start and end with 'a'
+    }
+
+    // Check if the string starts and ends with 'a'
+    if (str[0] == 'a' && str[length - 1] == 'a') {
+        return 1; // Accept the string
+    }
+
+    return 0; // Reject the string
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (isAcceptedByDFA(inputString)) {
+        printf("The string is accepted by the DFA.\n");
+    } else {
+        printf("The string is rejected by the DFA.\n");
+    }
+
+    return 0;
+}
