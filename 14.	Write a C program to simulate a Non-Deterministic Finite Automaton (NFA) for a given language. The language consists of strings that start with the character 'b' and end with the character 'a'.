@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to simulate the NFA
+int simulateNFA(const char* str) {
+    int currentState = 0;
+    int length = strlen(str);
+
+    for (int i = 0; i < length; ++i) {
+        char c = str[i];
+        switch (currentState) {
+            case 0:
+                if (c == 'b') {
+                    currentState = 1;
+                }
+                break;
+            case 1:
+                if (c == 'a') {
+                    currentState = 2;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    return currentState == 2;
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (simulateNFA(inputString)) {
+        printf("The string is accepted by the NFA.\n");
+    } else {
+        printf("The string is rejected by the NFA.\n");
+    }
+
+    return 0;
+}
