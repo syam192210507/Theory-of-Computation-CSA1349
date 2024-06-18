@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+// Function to simulate the NFA
+bool simulateNFA(char *str) {
+    int currentState = 0;  // Start at initial state q0
+    int length = strlen(str);
+
+    for (int i = 0; i < length; ++i) {
+        char c = str[i];
+        switch (currentState) {
+            case 0:
+                if (c == '0') {
+                    currentState = 1;
+                } else {
+                    return false;
+                }
+                break;
+            case 1:
+                if (c == '0') {
+                    currentState = 2;
+                } else {
+                    return false;
+                }
+                break;
+            case 2:
+                if (c == '1') {
+                    currentState = 3;
+                } else {
+                    return false;
+                }
+                break;
+            case 3:
+                if (c == '1') {
+                    currentState = 4;
+                } else {
+                    return false;
+                }
+                break;
+        }
+    }
+
+    return currentState == 4;  // Accept if in the accepting state q4
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (simulateNFA(inputString)) {
+        printf("The string \"%s\" belongs to the language defined by the NFA.\n", inputString);
+    } else {
+        printf("The string \"%s\" does not belong to the language defined by the NFA.\n", inputString);
+    }
+
+    return 0;
+}
