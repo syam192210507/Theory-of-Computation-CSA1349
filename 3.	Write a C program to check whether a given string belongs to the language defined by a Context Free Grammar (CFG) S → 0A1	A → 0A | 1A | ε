@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the string matches the CFG
+int isAcceptedByCFG(const char* str) {
+    int length = strlen(str);
+
+    // Check if the string length is at least 2 (minimum length for "0A1")
+    if (length < 2) {
+        return 0; // Reject the string
+    }
+
+    // Check if the string starts with '0' and ends with '1'
+    if (str[0] != '0' || str[length - 1] != '1') {
+        return 0; // Reject the string
+    }
+
+    // Check the substring between the first '0' and the last '1'
+    for (int i = 1; i < length - 1; ++i) {
+        if (str[i] != '0' && str[i] != '1') {
+            return 0; // Reject the string if it contains characters other than '0' or '1'
+        }
+    }
+
+    return 1; // Accept the string
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (isAcceptedByCFG(inputString)) {
+        printf("The string belongs to the language defined by the CFG.\n");
+    } else {
+        printf("The string does not belong to the language defined by the CFG.\n");
+    }
+
+    return 0;
+}
