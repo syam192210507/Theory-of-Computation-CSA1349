@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the string matches the rule for S
+int isS(const char* str) {
+    int length = strlen(str);
+
+    // Check if all characters in the string are 'a'
+    for (int i = 0; i < length; ++i) {
+        if (str[i] != 'a') {
+            return 0; // Reject the string if it contains characters other than 'a'
+        }
+    }
+
+    return 1; // Accept if all characters are 'a'
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    if (isS(inputString)) {
+        printf("The string belongs to the language defined by the CFG.\n");
+    } else {
+        printf("The string does not belong to the language defined by the CFG.\n");
+    }
+
+    return 0;
+}
