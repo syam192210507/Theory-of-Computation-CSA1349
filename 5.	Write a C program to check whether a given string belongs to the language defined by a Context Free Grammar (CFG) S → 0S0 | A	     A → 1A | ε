@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the substring matches the rule for A
+int isA(const char* str, int start, int end) {
+    for (int i = start; i <= end; ++i) {
+        if (str[i] != '1') {
+            return 0; // Reject the string if it contains characters other than '1'
+        }
+    }
+    return 1; // Accept if all characters are '1'
+}
+
+// Function to check if the substring matches the rule for S
+int isS(const char* str, int start, int end) {
+    // Base case: if the substring is empty, it is valid
+    if (start > end) {
+        return 1;
+    }
+
+    // Check if the substring matches the rule for A
+    if (isA(str, start, end)) {
+        return 1;
+    }
+
+    // Check for the form 0S0
+    if (str[start] == '0' && str[end] == '0') {
+        return isS(str, start + 1, end - 1);
+    }
+
+    return 0; // Reject if it doesn't match any of the rules
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    int length = strlen(inputString);
+
+    if (isS(inputString, 0, length - 1)) {
+        printf("The string belongs to the language defined by the CFG.\n");
+    } else {
+        printf("The string does not belong to the language defined by the CFG.\n");
+    }
+
+    return 0;
+}
