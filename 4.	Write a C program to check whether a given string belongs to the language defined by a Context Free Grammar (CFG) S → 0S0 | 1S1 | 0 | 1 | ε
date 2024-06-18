@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to check if the string matches the CFG
+int isAcceptedByCFG(const char* str, int start, int end) {
+    // Base case: if start index exceeds end index, it's a valid empty string
+    if (start > end) {
+        return 1;
+    }
+
+    // Single character cases
+    if (start == end) {
+        return (str[start] == '0' || str[start] == '1');
+    }
+
+    // Check if the first and last characters are '0' or '1' and recursively check the middle substring
+    if (str[start] == '0' && str[end] == '0') {
+        return isAcceptedByCFG(str, start + 1, end - 1);
+    }
+
+    if (str[start] == '1' && str[end] == '1') {
+        return isAcceptedByCFG(str, start + 1, end - 1);
+    }
+
+    // If none of the above conditions are met, the string is not in the language
+    return 0;
+}
+
+int main() {
+    char inputString[100];
+
+    printf("Enter a string: ");
+    scanf("%s", inputString);
+
+    int length = strlen(inputString);
+
+    if (isAcceptedByCFG(inputString, 0, length - 1)) {
+        printf("The string belongs to the language defined by the CFG.\n");
+    } else {
+        printf("The string does not belong to the language defined by the CFG.\n");
+    }
+
+    return 0;
+}
